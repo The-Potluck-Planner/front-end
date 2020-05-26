@@ -7,10 +7,18 @@ import DashBoard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
 import { Switch ,Route, useHistory } from 'react-router-dom'
+import * as yup from 'yup'
+import formSchema from './validation/formSchema'
 
+ 
 const initialLogin={
   username:'',
   password:''
+}
+
+const initialFormErrors={
+  username: '',
+  password: '',
 }
 
 const initialRegister={
@@ -18,7 +26,6 @@ const initialRegister={
     username:'',
     password:'',
     confirmPassword:'',
-    email:''
 }
 
 function App({isValidating, errors, name, userLogin, registerUser}) {
@@ -26,18 +33,52 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
 
   const [login, setLogin] = useState(initialLogin)
   const [register,setRegister] = useState(initialRegister)
+  const [formErrors, setFormErrors]=useState(initialFormErrors)
 
-  const onInputChange = evt => {
-    const { name, value } = evt.target
-    setLogin({ ...login, [name]:value })
-    console.log(login)
-  }
+       const onInputChange = (evt) => {
+
+          const {name,value}=evt.target
+
+          yup.reach(formSchema, name)
+              .validate(value)
+              .then(valid=>{
+                setFormErrors({
+                  ...formErrors,
+                  [name]: ''
+                })
+              })
+              .catch((err)=>{
+                setFormErrors({
+                  ...formErrors,
+                  [name]: err.errors[0]
+                })
+              })
+              
+          
+          setLogin({...login,[name]:value})
+          console.log(login)
+       }
     
-  const registerOnInputChange = evt => {
-    const { name,value } = evt.target
-    setRegister({ ...register, [name]:value })
-    console.log(register)
-  }
+const registerOnInputChange = (evt) => {
+        const {name,value}=evt.target
+
+        yup.reach(formSchema, name)
+              .validate(value)
+              .then(valid=>{
+                setFormErrors({
+                  ...formErrors,
+                  [name]: ''
+                })})
+              .catch((err)=>{
+                setFormErrors({
+                  ...formErrors,
+                  [name]: err.errors[0]
+                })
+              })
+            
+        setRegister({...register,[name]:value})
+        console.log(register)
+     }
 
   const onLogin= evt => {
     evt.preventDefault();
@@ -65,14 +106,14 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
     <Switch>
       <PrivateRoute exact path='/' component={DashBoard} name={name} />
       <Route exact path="/login">
-        <Login info={login} onInputChange={onInputChange} onLogin={onLogin} errors={errors} />
+        <Login info={login} onInputChange={onInputChange} onLogin={onLogin} errors={formErrors} otherErrors={errors} />
       </Route>
       <Route exact path="/register">
-        <Register info={register} onInputChange={registerOnInputChange} onSubmit={onSubmit}/>
+        <Register info={register} onInputChange={registerOnInputChange} onSubmit={onSubmit} errors={formErrors}/>
       </Route>
     </Switch>
     </div>
-  );
+  )
 }
 
 const mapState = state => {

@@ -1,30 +1,29 @@
 import React from 'react'
+import { EditorBorderStyle } from 'material-ui/svg-icons'
 
 function Register(props){
-
- 
 
        const {
        info,
        onInputChange,
-       onSubmit
+       onSubmit,
+       errors
 
     }=props
 
     return(
        <>
        <form>
-
      <h1>Welcome to Potluck Planner</h1>
 
-     <label> Name:&nbsp;
+     <label>Name:&nbsp;
 
-      <input type='text' 
-          name='name'
-          value={info.name} 
-          onChange={onInputChange}/>
+    <input type='text' 
+       name='name'
+        value={info.name} 
+       onChange={onInputChange}/>
 
-      </label>
+    </label>
 
      <label> Username:&nbsp;
 
@@ -35,6 +34,8 @@ function Register(props){
 
     </label>
 
+    <div>{errors.username}</div>
+
      <label> Password:&nbsp; 
 
      <input type='password'
@@ -42,24 +43,8 @@ function Register(props){
              value={info.password}
              onChange={onInputChange}/>
     </label>
-            
-       <label> Confirm Password:&nbsp; 
 
-     <input type='password'
-             name='password' 
-             value={info.confirmaPssword}
-             onChange={onInputChange}/>
-
-    </label>
-
-    <label> Email:&nbsp; 
-
-    <input type='text'
-        name='email' 
-        value={info.email}
-        onChange={onInputChange}/>
-
-    </label>
+     <div>{errors.password}</div>
 
      <button onClick={onSubmit}>Submit</button>
         </form>
