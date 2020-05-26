@@ -1,5 +1,4 @@
 import React from 'react'
-import { EditorBorderStyle } from 'material-ui/svg-icons'
 
 function Register(props){
 
