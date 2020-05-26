@@ -52,7 +52,7 @@ function App() {
               
           
           setLogin({...login,[name]:value})
-          console.log(login)
+        //  console.log(login)
        }
     
        const registerOnInputChange = (evt) => {
@@ -73,13 +73,13 @@ function App() {
               })
             
         setRegister({...register,[name]:value})
-        console.log(register)
+       // console.log(register)
      }
 
      const onLogin=(evt)=>{
       
       evt.preventDefault(); 
-      console.log('login button clicked')
+      //console.log('login button clicked')
 
       const newUser={...login}
 
