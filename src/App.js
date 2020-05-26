@@ -54,7 +54,7 @@ function App() {
       <div className="App">
 
     <Switch>
-      <Route exact path="/">
+      <Route exact path="/login">
     <Login info={login} onInputChange={onInputChange} onLogin={onLogin}/>
       </Route>
 

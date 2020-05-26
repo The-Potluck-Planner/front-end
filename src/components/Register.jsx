@@ -14,7 +14,6 @@ function Register(props){
     return(
        <>
        <form>
-
      <h1>Welcome to Potluck Planner</h1>
 
      <label> Username:&nbsp;
