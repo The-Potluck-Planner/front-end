@@ -5,6 +5,7 @@ function Login(props){
     const {
        info,
        onInputChange,
+       onLogin,
 
     }=props
 
@@ -28,7 +29,7 @@ function Login(props){
              value={info.password}
              onChange={onInputChange}/>
 
-     <button>Login</button>
+     <button onClick={onLogin}>Login</button>
         </form>
 
      <Link to='./register'>

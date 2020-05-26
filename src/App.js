@@ -11,7 +11,7 @@ const initialLogin={
   password:''
 }
 
-const iniitialRegister={
+const initialRegister={
      username:'',
      password:'',
      confirmPassword:'',
@@ -19,10 +19,11 @@ const iniitialRegister={
 
 }
 
+
 function App() {
 
        const [login, setLogin]=useState(initialLogin)
-       const [register,setRegister]=useState(iniitialRegister)
+       const [register,setRegister]=useState(initialRegister)
 
        const onInputChange = (evt) => {
           const {name,value}=evt.target
@@ -35,17 +36,30 @@ function App() {
         setRegister({...register,[name]:value})
         console.log(register)
      }
+
+     const onLogin=(evt)=>{
+      
+      evt.preventDefault(); 
+      console.log('login button clicked')
+
+     }
+
+     const onSubmit=(evt)=>{
+      evt.preventDefault(); 
+       console.log('submit button clicked')
+     }
+
   return (
     
       <div className="App">
 
     <Switch>
       <Route exact path="/">
-    <Login info={login} onInputChange={onInputChange}/>
+    <Login info={login} onInputChange={onInputChange} onLogin={onLogin}/>
       </Route>
 
       <Route exact path="/register">
-        <Register info={register} onInputChange={registerOnInputChange}/>
+        <Register info={register} onInputChange={registerOnInputChange} onSubmit={onSubmit}/>
         </Route>
 
     </Switch>

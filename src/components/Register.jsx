@@ -7,6 +7,7 @@ function Register(props){
        const {
        info,
        onInputChange,
+       onSubmit
 
     }=props
 
@@ -51,7 +52,7 @@ function Register(props){
 
     </label>
 
-     <button>Submit</button>
+     <button onClick={onSubmit}>Submit</button>
         </form>
      
       </>
