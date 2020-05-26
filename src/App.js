@@ -81,6 +81,10 @@ function App() {
       evt.preventDefault(); 
       console.log('login button clicked')
 
+      const newUser={...login}
+
+      postNewUser(newUser,'login')
+
      }
 
      const onSubmit=(evt)=>{
@@ -89,14 +93,14 @@ function App() {
 
       const newUser={...register}
 
-      postNewUser(newUser)
+      postNewUser(newUser,'register')
      }
 
-      const postNewUser=(newUser)=>{
+      const postNewUser=(newUser,endpoint)=>{
         console.log('I am at postNewUser')
         console.log(newUser)
 
-        axios.post('https://thepotluckplanner.herokuapp.com/auth/register',newUser)
+        axios.post(`https://thepotluckplanner.herokuapp.com/auth/${endpoint}`, newUser)
         .then(res=>{
           console.log(res.data)
         })
