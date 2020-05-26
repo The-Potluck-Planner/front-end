@@ -1,5 +1,5 @@
 import axios from 'axios'
-const BASE_URL = 'TBD'
+import { BASE_URL, axiosWithAuth } from '../../utils/axiosAuth'
 
 //LOGIN AND REGISTER
 export const REGISTER_START = 'REGISTER_START'
