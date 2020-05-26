@@ -12,11 +12,11 @@ function Login(props){
    return(
        <>
        <form>
-
+      
      <h1>Welcome to Potluck Planner</h1>
-
+     {props.errors && <div>{props.errors}</div>}
      <label> username:&nbsp;   </label>
-
+     
      <input type='text' 
             name='username'
              value={info.username} 

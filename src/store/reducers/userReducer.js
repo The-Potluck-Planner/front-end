@@ -9,21 +9,19 @@ import {
 
 
 const init = {
-    username: '',
-    password: '',
-    passwordConfirm: '',
     name:'',
-    isWaiting: false,
+    isValidating: false,
+    errors:''
 }
 
 export const userReducer = (state = init, action) => {
     switch(action.type) {
         case LOGIN_START:
-            return { ...state }
+            return { ...state, isValidating: true, errors: '' }
         case LOGIN_SUCCESS:
-            return { ...state }
+            return { ...state, isValidating: false, name: action.payload.message }
         case LOGIN_FAILURE:
-            return { ...state }
+            return { ...state, isValidating:false, errors: action.payload }
         case REGISTER_START:
             return { ...state }
         case REGISTER_SUCCESS:

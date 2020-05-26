@@ -17,6 +17,15 @@ function Register(props){
 
      <h1>Welcome to Potluck Planner</h1>
 
+     <label> Name:&nbsp;
+
+      <input type='text' 
+          name='name'
+          value={info.name} 
+          onChange={onInputChange}/>
+
+      </label>
+
      <label> Username:&nbsp;
 
      <input type='text' 
