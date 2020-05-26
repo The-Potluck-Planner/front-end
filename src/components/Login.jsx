@@ -12,12 +12,12 @@ function Login(props){
 
    return(
        <>
-
     <form>
 
      <h1>Welcome to Potluck Planner</h1>
-
+     {props.otherErrors && <div>{props.otherErrors}</div>}
      <label> username:&nbsp;   
+
 
      <input type='text' 
             name='username'
