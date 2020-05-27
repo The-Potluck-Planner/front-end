@@ -56,7 +56,7 @@ export const getEvents = () => dispatch => {
             dispatch({ type: GET_EVENTS_SUCCESS, payload: res.data })
         })
         .catch(err => {
-            dispatch({ type: GET_EVENTS_FAILURE, payload: err.response.data.message })
+            dispatch({ type: GET_EVENTS_FAILURE, payload: err })
         })
 }
 

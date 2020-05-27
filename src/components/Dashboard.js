@@ -20,7 +20,6 @@ export default function Dashboard(props) {
             <button onClick={logOut}>Log out</button>
             <ListEvents />
             <AddEvent />
-            <ListEvents />
         </div>
     )
 }
