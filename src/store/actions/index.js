@@ -10,15 +10,15 @@ export const REGISTER_FAILURE = 'REGISTER_FAILURE'
 export const register = newUser => dispatch => {
     dispatch({ type: REGISTER_START })
 
-    axios
+    return axios
         .post(`${BASE_URL}auth/register`, newUser)
         .then(res => {
-            console.log(res.data)
             dispatch({ type: REGISTER_SUCCESS, payload: res.data })
+            return res.status
         })
         .catch(err => {
-            console.log(err)
-            dispatch({ type: REGISTER_FAILURE, payload: err })
+            dispatch({ type: REGISTER_FAILURE, payload: err.response.data.message })
+            return err.response.request.status
         })
 }
 
@@ -29,16 +29,15 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
 export const login = user => dispatch => {
     dispatch({ type: LOGIN_START })
-    console.log("ACTION FIRED")
-    axios
+    return axios
         .post(`${BASE_URL}auth/login`, user)
         .then(res => {
-            console.log(res.data)
             localStorage.setItem('token', res.data.token)
             dispatch({ type: LOGIN_SUCCESS, payload: res.data })
+            return res.status
         })
         .catch(err => {
-            console.log(err.response.data.message)
             dispatch({ type: LOGIN_FAILURE, payload: err.response.data.message })
+            return err.response.request.status
         })
 }
