@@ -9,6 +9,8 @@ import Register from './components/Register'
 import { Switch ,Route, useHistory} from 'react-router-dom'
 import * as yup from 'yup'
 import formSchema from './validation/formSchema'
+import axios from 'axios'
+import AddEvent from './components/AddEvent'
 
  
 const initialLogin={
@@ -28,11 +30,14 @@ const initialRegister={
     confirmPassword:'',
 }
 
+
+
 function App({isValidating, errors, name, userLogin, registerUser}) {
   const { push } = useHistory()
   const [login, setLogin] = useState(initialLogin)
   const [register,setRegister] = useState(initialRegister)
   const [formErrors, setFormErrors]=useState(initialFormErrors)
+
 
   const onInputChange = (evt) => {
     const {name,value}=evt.target
@@ -109,6 +114,9 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
       </Route>
       <Route exact path="/register">
         <Register info={register} onInputChange={registerOnInputChange} onSubmit={onSubmit} errors={formErrors}/>
+      </Route>
+      <Route exact path='/addevent'>
+      <AddEvent/>
       </Route>
     </Switch>
     </div>
