@@ -22,7 +22,6 @@ export const register = newUser => dispatch => {
         })
 }
 
-
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -41,3 +40,26 @@ export const login = user => dispatch => {
             return err.response.request.status
         })
 }
+
+//#################  EVENTS  #######################
+
+export const GET_EVENTS_START = "GET_EVENTS_START"
+export const GET_EVENTS_SUCCESS = "GET_EVENTS_SUCCESS"
+export const GET_EVENTS_FAILURE = "GET_EVENTS_FAILURE"
+
+export const getEvents = () => dispatch => {
+    dispatch({ type: GET_EVENTS_START })
+
+    axiosWithAuth()
+        .get(`${BASE_URL}api/events`)
+        .then(res => {
+            dispatch({ type: GET_EVENTS_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            dispatch({ type: GET_EVENTS_FAILURE, payload: err })
+        })
+}
+
+export const ADD_EVENTS_START = "GET_EVENTS_START"
+export const ADD_EVENTS_SUCCESS = "GET_EVENTS_SUCCESS"
+export const ADD_EVENTS_FAILURE = "GET_EVENTS_FAILURE"
