@@ -24,8 +24,6 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-
-
 h1{
     font-size: 3rem;
     color: #000000;
@@ -35,11 +33,15 @@ h2{
     font-size: 1.75rem;
     color: #000000;
 }
+h3{
+    font-size: 1.5rem;
+}
 
 a{
     font-size: 1.5rem;
     text-decoration: none;
 }
+
 
 body{
     background-color: #CED4D8;
@@ -78,6 +80,12 @@ p{
     color: #DAD7CD;
 }
 
+.footerContent a:hover{
+    transition: all .5s ease;
+    background-color: #555358;
+    color: #DAD7CD;
+}
+
 .bodyContent {
     width: 80%;
     margin: 0 auto;
@@ -95,6 +103,15 @@ p{
     justify-content: center;
     padding: 2%;
     border-bottom: 5px #386A6C solid;
+}
+
+.aboutContent{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 2%;
+    border-bottom: 5px #386A6C dotted;
 }
 
 .container{
@@ -124,6 +141,90 @@ p{
 .navBorder{
     border-radius: 10px;
     padding: 10px;
-    background-color: #777777;
-    color: #000000;
+    background-color: #386A6C;
+    color: #DAD7CD;
+}
+
+.footerContent{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 2%;
+    justify-content: space-evenly;
+    margin-top: 3%;
+    padding-top:3%;
+    margin-bottom: 3%;
+}
+
+/*----------------- MEDIA BREAKPOINTS ---------------------*/
+
+
+@media(max-width: 500px){
+
+    .headerContent{
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+    .headerContent a{
+        margin: 2%;
+    }
+    .headerContent h1{
+        text-align: center;
+    }
+
+    /*-----------------------*/
+
+    .bodyContent{
+        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .eventContent{
+        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /*-----------------------*/
+
+    .aboutContent{
+        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /*-----------------------*/
+
+    .footerContent{
+        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: center;
+        padding:3%;
+    }
+
+}
+
+
+
+@media (max-width: 935px){
+    .headerContent{
+        flex-direction: column;
+        flex-wrap: wrap; 
+        text-align: center;
+    }
+
+    .headerContent a{
+        margin: 2%;
+    }
+
+    /*-----------------------*/
+
+    .bodyContent{
+        flex-direction: column;
+        flex-wrap: wrap; 
+        text-align: center;
+    }
+    
 }
