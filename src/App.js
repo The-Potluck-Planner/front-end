@@ -103,7 +103,7 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
   return (
     <div className="App">
     <Switch>
-      <PrivateRoute exact path='/' component={DashBoard} name={name} />
+      <PrivateRoute exact path='/' component={DashBoard} />
       <Route exact path="/login">
         <Login info={login} onInputChange={onInputChange} onLogin={onLogin} errors={formErrors} otherErrors={errors} />
       </Route>
