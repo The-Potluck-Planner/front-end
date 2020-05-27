@@ -6,7 +6,7 @@ import PrivateRoute from './components/PrivateRoute'
 import DashBoard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
-import { Switch ,Route, useHistory } from 'react-router-dom'
+import { Switch ,Route, useHistory} from 'react-router-dom'
 import * as yup from 'yup'
 import formSchema from './validation/formSchema'
 
@@ -30,65 +30,59 @@ const initialRegister={
 
 function App({isValidating, errors, name, userLogin, registerUser}) {
   const { push } = useHistory()
-
   const [login, setLogin] = useState(initialLogin)
   const [register,setRegister] = useState(initialRegister)
   const [formErrors, setFormErrors]=useState(initialFormErrors)
 
-       const onInputChange = (evt) => {
-
-          const {name,value}=evt.target
-
-          yup.reach(formSchema, name)
-              .validate(value)
-              .then(valid=>{
-                setFormErrors({
-                  ...formErrors,
-                  [name]: ''
-                })
-              })
-              .catch((err)=>{
-                setFormErrors({
-                  ...formErrors,
-                  [name]: err.errors[0]
-                })
-              })
-              
-          
-          setLogin({...login,[name]:value})
-          console.log(login)
-       }
+  const onInputChange = (evt) => {
+    const {name,value}=evt.target
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then(valid=>{
+        setFormErrors({
+          ...formErrors,
+          [name]: ''
+        })
+      })
+      .catch((err)=>{
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0]
+        })
+      })
+    setLogin({...login,[name]:value})
+  }
     
-const registerOnInputChange = (evt) => {
-        const {name,value}=evt.target
-
-        yup.reach(formSchema, name)
-              .validate(value)
-              .then(valid=>{
-                setFormErrors({
-                  ...formErrors,
-                  [name]: ''
-                })})
-              .catch((err)=>{
-                setFormErrors({
-                  ...formErrors,
-                  [name]: err.errors[0]
-                })
-              })
-            
-        setRegister({...register,[name]:value})
-        console.log(register)
-     }
+  const registerOnInputChange = (evt) => {
+    const {name,value}=evt.target
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then( valid => {
+        setFormErrors({
+          ...formErrors,
+          [name]: ''
+        })
+      })
+      .catch((err)=>{
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0]
+        })
+      }) 
+    setRegister({...register,[name]:value})
+  }
 
   const onLogin= evt => {
     evt.preventDefault();
-    console.log('login button clicked')
     userLogin(login)
-    if (errors.length){
-      setTimeout(() => {
+    .then(res => {
+      if (res === 200) {
         push('/')
-      }, 1000)
-    }
+      } 
+    })
+    setLogin(initialLogin)
   }
 
   const onSubmit= evt => {
@@ -97,8 +91,13 @@ const registerOnInputChange = (evt) => {
       name: register.name,
       username: register.username,
       password: register.password
-    }) 
-    console.log('Register button clicked')
+    }).then(status => {
+      console.log(status)
+      if (status === 201) {
+        push('/login')
+      }
+    })
+    setRegister(initialRegister) 
   }
 
   return (
