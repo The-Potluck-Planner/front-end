@@ -81,40 +81,26 @@ const registerOnInputChange = (evt) => {
        // console.log(register)
      }
 
-     const onLogin=(evt)=>{
-      
-      evt.preventDefault(); 
-      //console.log('login button clicked')
+  const onLogin= evt => {
+    evt.preventDefault();
+    console.log('login button clicked')
+    userLogin(login)
+    if (errors.length){
+      setTimeout(() => {
+        push('/')
+      }, 1000)
+    }
+  }
 
-      const newUser={...login}
-
-      postNewUser(newUser,'login')
-
-     }
-
-     const onSubmit=(evt)=>{
-      evt.preventDefault(); 
-       console.log('submit button clicked')
-
-      const newUser={...register}
-
-      postNewUser(newUser,'register')
-     }
-
-      const postNewUser=(newUser,endpoint)=>{
-        console.log('I am at postNewUser')
-        console.log(newUser)
-
-        axios.post(`https://thepotluckplanner.herokuapp.com/auth/${endpoint}`, newUser)
-        .then(res=>{
-          console.log(res.data)
-        })
-        .catch(err=>{
-          if(err.response){    
-             console.log(err.response.data)}
-     
-        })
-      }
+  const onSubmit= evt => {
+    evt.preventDefault();
+    registerUser({
+      name: register.name,
+      username: register.username,
+      password: register.password
+    }) 
+    console.log('Register button clicked')
+  }
 
   return (
     <div className="App">
