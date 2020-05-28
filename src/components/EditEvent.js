@@ -40,10 +40,10 @@ function EditEvent({createEvent, isLoading, errors, userID, editEvent}) {
     evt.preventDefault();
     const modifiedEvent = {
         ...event, 
-        userID: Number(userID),
         time_To: Number(event.time_To),
         time_From: Number(event.time_From)
     }
+    delete modifiedEvent.id
     console.log('submit clicked', {modifiedEvent})
     editEvent(modifiedEvent, id)
         .then(res => {

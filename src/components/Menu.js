@@ -63,6 +63,8 @@ function Menu(props) {
 
             {/* ##### EDIT FORM */
              editing &&(
+                 <>
+                 <h3>Edit Menu Item</h3>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor='name'>Menu Item
                     <input
@@ -92,13 +94,46 @@ function Menu(props) {
                     />
                     </label>
                 </form>
+                </>
             )}
 
 
 
-            {/* ##### ADD FORM
-            
-             */}
+            {/* ##### ADD FORM */
+             adding && (
+                 <>
+                 <h3>Add New Menu Item</h3>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor='name'>Menu Item
+                    <input
+                        id='name'
+                        type='text'
+                        name='name'
+                        value={form.name}
+                        onChange={handlesChanges}
+                    />
+                    </label>
+                    <label htmlFor='category'>Category
+                    <input
+                        id='category'
+                        type='text'
+                        name='category'
+                        value={form.category}
+                        onChange={handlesChanges}
+                    />
+                    </label>
+                    <label htmlFor='quantity'>Quantity
+                    <input
+                        id='quantity'
+                        type='text'
+                        name='quantity'
+                        value={form.quantitiy}
+                        onChange={handlesChanges}
+                    />
+                    </label>
+                </form>
+                </>
+             )}
         </div>
     )
 }

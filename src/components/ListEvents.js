@@ -54,7 +54,7 @@ const mapState = (state) => {
     rsvps: state.event.rsvps,
     isLoading: state.event.isLoading,
     errors: state.event.errors,
-    userID: state.user.name,
+    userID: state.user.id,
   };
 };
 
