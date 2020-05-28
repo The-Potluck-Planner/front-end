@@ -1,8 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { axiosWithAuth, BASE_URL } from '../utils/axiosAuth'
 
 function Menu(props) {
 
     const [selected, setSelected] = useState(props.menu)
+    const { id } = useParams()
+
+
+    useEffect(() => {
+        axiosWithAuth()
+            .get(`${BASE_URL}api/events/${id}/food`)
+            .then(res => console.log(res.data))
+            .catch(err => console.log({err}))
+    }, [id])
 
     const toggleSelect = itemId => {
         const newTodos = selected.map(item => {
@@ -15,6 +26,8 @@ function Menu(props) {
         
         setSelected(newTodos)
     }
+
+
 
     return (
         <div>

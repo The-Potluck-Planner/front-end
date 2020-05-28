@@ -6,11 +6,14 @@ import PrivateRoute from './components/PrivateRoute'
 import DashBoard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
-import { Switch ,Route, useHistory} from 'react-router-dom'
+import { Switch ,Route, useHistory, Link} from 'react-router-dom'
 import * as yup from 'yup'
 import formSchema from './validation/formSchema'
 import axios from 'axios'
 import AddEvent from './components/AddEvent'
+import EditEvent from './components/EditEvent'
+import AddMenuItem from './components/AddMenuItem'
+import SingleEvent from './components/SingleEvent'
 
  
 const initialLogin={
@@ -37,6 +40,12 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
   const [login, setLogin] = useState(initialLogin)
   const [register,setRegister] = useState(initialRegister)
   const [formErrors, setFormErrors]=useState(initialFormErrors)
+
+
+  const logOut = () => {
+    localStorage.removeItem('token')
+    push('login')
+  }
 
 
   const onInputChange = (evt) => {
@@ -92,6 +101,11 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
 
   const onSubmit= evt => {
     evt.preventDefault();
+    console.log({
+      name: register.name,
+      username: register.username,
+      password: register.password
+    })
     registerUser({
       name: register.name,
       username: register.username,
@@ -105,10 +119,27 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
     setRegister(initialRegister) 
   }
 
+  const displayButton = () => {
+    if (localStorage.getItem("token") !== null) {
+      return (
+        <button onClick={logOut}>Log out</button>
+      )
+    }
+  }
+
   return (
     <div className="App">
+    <h1>Potluck Planner</h1>
+    {displayButton()}
+    <Link to='/'>Home</Link>
+    <Link to='/addfood'>Add Food</Link>
     <Switch>
-      <PrivateRoute exact path='/' component={DashBoard} />
+      <Route exact path="/addfood">
+        <AddMenuItem />
+      </Route>
+      <Route exact path="/events/:id">
+        <SingleEvent />
+      </Route>
       <Route exact path="/login">
         <Login info={login} onInputChange={onInputChange} onLogin={onLogin} errors={formErrors} otherErrors={errors} />
       </Route>
@@ -116,8 +147,12 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
         <Register info={register} onInputChange={registerOnInputChange} onSubmit={onSubmit} errors={formErrors}/>
       </Route>
       <Route exact path='/addevent'>
-      <AddEvent/>
+        <AddEvent/>
       </Route>
+      <Route exact path='/edit/:id'>
+        <EditEvent />
+      </Route>
+      <PrivateRoute  path='/' component={DashBoard} />
     </Switch>
     </div>
   )
