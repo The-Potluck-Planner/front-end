@@ -120,7 +120,8 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
   }
 
   const displayButton = () => {
-    if (localStorage.getItem("token") !== null) {
+    if (localStorage.getItem("token")) {
+      console.log('token present')
       return (
         <button onClick={logOut}>Log out</button>
       )
