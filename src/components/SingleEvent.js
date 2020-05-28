@@ -1,5 +1,7 @@
 import React from 'react'
 import Menu from './Menu'
+import { useParams, useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const menu = [
     {id:1, name:'Main dish', selected: false,}, 
@@ -13,13 +15,31 @@ const menu = [
     {id:9, name:'Dessert', selected: false,},
 ]
 
-export default function SingleEvent({event}) {
+export default function SingleEvent(props) {
+    const { push } = useHistory()
+    const { id } = useParams()
+    const { events } = useSelector(state => state.event)
+
+    const event = events.filter(event => event.id == id)
+    console.log(id, events, event)
+
+    if(event.length === 0) {
+        return <h2>Sorry, there was an error, please try again</h2>
+    }
+
     return (
-        <div>
-            <h2>Event Details</h2>
-            <h3>{event.name}</h3>
-            <p>{event.description}</p>
-            <Menu menu={menu}/>
-        </div>
+        <div key={event[0].id}>
+        <h3>Event Details</h3>
+        <p>Event: {event[0].title}</p>
+        <p>Location:{event[0].location}</p>
+        <p>Date: {event[0].month} {event[0].day} {event[0].year}</p>
+        <p>Time: {event[0].time_From}-{event[0].time_To}</p>
+        <button onClick={() => push(`/edit/${event[0].id}`)} >Edit Event</button>
+        <h3>Menu</h3>
+        <Menu menu={menu}/>
+        <h3>Invitations/Guests</h3>
+        <p>TBD</p>
+      </div>
+        
     )
 }
