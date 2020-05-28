@@ -63,9 +63,11 @@ export const getEvents = userID => dispatch => {
         })
 }
 
-export const ADD_EVENTS_START = "GET_EVENTS_START"
-export const ADD_EVENTS_SUCCESS = "GET_EVENTS_SUCCESS"
-export const ADD_EVENTS_FAILURE = "GET_EVENTS_FAILURE"
+//ADD EVENTS
+
+export const ADD_EVENTS_START = "ADD_EVENTS_START"
+export const ADD_EVENTS_SUCCESS = "ADD_EVENTS_SUCCESS"
+export const ADD_EVENTS_FAILURE = "ADD_EVENTS_FAILURE"
 
 export const addEvent = event => dispatch => {
     dispatch({ type:ADD_EVENTS_START })
@@ -78,6 +80,8 @@ export const addEvent = event => dispatch => {
         .catch(err => console.log({err}))
 }
 
+//EDIT EVENT
+
 export const EDIT_EVENT_START = "EDIT_EVENT_START"
 export const EDIT_EVENT_SUCCESS = "EDIT_EVENT_SUCCESS"
 export const EDIT_EVENT_FAILURE = "EDIT_EVENT_FAILURE"
@@ -89,14 +93,36 @@ export const editEvent = (event, id) => dispatch => {
             .put(`${BASE_URL}api/events/${id}`, event)
             .then(res => {
                 console.log(res.data)
-                dispatch({ type: EDIT_EVENT_SUCCESS, payload: res.data })
+                dispatch({ type: EDIT_EVENT_SUCCESS, payload: res.data.success[0] })
                 return res.data
             })
             .catch(err => {
                 dispatch({ type: EDIT_EVENT_FAILURE, payload: {err} })
                 return {err}
             })
-    //do stuff here
+}
+
+//DELETE EVENT
+
+export const DELETE_EVENT_START = 'DELETE_EVENT_START'
+export const DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS'
+export const DELETE_EVENT_FAILURE = 'DELETE_EVENT_FAILURE'
+
+export const deleteEvent = id => dispatch => {
+    dispatch({ type: DELETE_EVENT_START })
+
+    return axiosWithAuth()
+        .delete(`${BASE_URL}api/events/${id}`)
+        .then(res => {
+            console.log(res.data)
+            dispatch({ type: DELETE_EVENT_SUCCESS, payload: res.data })
+            return res.data
+        })
+        .catch(err => {
+            console.log({err})
+            dispatch({ type: DELETE_EVENT_FAILURE, payload: err })
+            return err
+        })
 }
 
 
@@ -107,8 +133,18 @@ export const GET_FOODS_START = 'GET_FOODS_START'
 export const GET_FOODS_SUCCESS = 'GET_FOODS_SUCCESS'
 export const GET_FOODS_FAILURE = 'GET_FOODS_FAILURE'
 
-export const getFoods = () => {
-
+export const getFoods = eventID => dispatch => {
+    dispatch({ type: GET_FOODS_START })
+    axiosWithAuth()
+        .get(`api/events/${eventID}/food`)
+        .then(res => {
+            console.log(res)
+            dispatch({ type: GET_FOODS_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            console.log({err})
+            dispatch({ type: GET_FOODS_FAILURE, payload: err })
+        })
 }
 
 //POST
@@ -116,7 +152,7 @@ export const ADD_FOOD_START = 'ADD_FOOD_START'
 export const ADD_FOOD_SUCCESS = 'ADD_FOOD_SUCCESS'
 export const ADD_FOOD_FAILURE = 'ADD_FOOD_FAILURE'
 
-export const addFood = food => {
+export const addFood = food => dispatch => {
 
 }
 
@@ -125,7 +161,7 @@ export const EDIT_FOOD_START = 'EDIT_FOOD_START'
 export const EDIT_FOOD_SUCCESS = 'EDIT_FOOD_SUCCESS'
 export const EDIT_FOOD_FAILURE = 'EDIT_FOOD_FAILURE'
 
-export const editFood = foodID => {
+export const editFood = foodID => dispatch => {
     
 }
 
@@ -134,6 +170,6 @@ export const DELETE_FOOD_START = 'DELETE_FOOD_START'
 export const DELETE_FOOD_SUCCESS = 'DELETE_FOOD_SUCCESS'
 export const DELETE_FOOD_FAILURE = 'DELETE_FOOD_FAILURE'
 
-export const deleteFood = foodID => {
+export const deleteFood = foodID => dispatch => {
 
 }

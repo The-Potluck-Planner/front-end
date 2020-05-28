@@ -32,7 +32,8 @@ function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, 
       <h2>My Events</h2>
       {events &&
         events.map((event) => {
-          return (
+          return (        
+            
             <div className='eventLink' >
             <Link to={`/events/${event.id}`} style={{ textDecoration: 'none' }}>
             <div key={event.id}>
@@ -43,6 +44,7 @@ function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, 
             </div>
             </Link>
             </div>
+
           );
         })}
     </div>

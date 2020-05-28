@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Menu from './Menu'
 import { useParams, useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, connect } from 'react-redux'
+import { deleteEvent } from '../store/actions'
 import Guests from './Guests'
 
 const menu = [
@@ -16,13 +17,11 @@ const menu = [
     {id:9, name:'Dessert', selected: false,},
 ]
 
-export default function SingleEvent(props) {
+function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
     const { push } = useHistory()
     const { id } = useParams()
-    const { events } = useSelector(state => state.event)
 
     const event = events.filter(event => event.id == id)
-    console.log(id, events, event)
 
     if(event.length === 0) {
         return <h2>Sorry, there was an error, please try again</h2>
@@ -30,13 +29,23 @@ export default function SingleEvent(props) {
   
   const onInviteSubmit= evt=>{
         evt.preventDefault()
-        console.log('invite a friend clicked')
+    }
+  
+    const onEditSubmit=evt=>{
+        evt.preventDefault()
+
     }
 
     const onDeleteSubmit=evt=>{
         evt.preventDefault()
-        console.log('Delete event clicked')
-
+        const result = window.confirm('Are you sure you want to delete')
+        if (result) {
+            deleteEvent(id)
+                .then(res => {
+                    push('/events')
+                })
+        }
+        
     }
 
     const guestSample={
@@ -46,24 +55,38 @@ export default function SingleEvent(props) {
 
     return (
         <div key={event[0].id}>
-        <h3>Event Details</h3>
-        <p>Event: {event[0].title}</p>
-        <p>Location:{event[0].location}</p>
-        <p>Date: {event[0].month} {event[0].day} {event[0].year}</p>
-        <p>Time: {event[0].time_From}-{event[0].time_To}</p>
-        <button onClick={() => push(`/edit/${event[0].id}`)} >Edit Event</button>
-        <h3>Menu</h3>
-        <Menu menu={menu}/>
-        <h3>Invitations/Guests</h3>
-        <Guests info={guestSample}/>
-          <div>
-            <button onClick={onInviteSubmit}>Invite a Friend</button> 
-            <button onClick={onDeleteSubmit}>Delete Event</button>
-           <div>
-
-           </div>
+            <h3>Event Details</h3>
+            <p>Event: {event[0].title}</p>
+            <p>Location:{event[0].location}</p>
+            <p>Date: {event[0].month} {event[0].day} {event[0].year}</p>
+            <p>Time: {event[0].time_From}-{event[0].time_To}</p>
+            <button onClick={() => push(`/edit/${event[0].id}`)} >Edit Event</button>
+            <div>
+                <button disabled onClick={onEditSubmit}> Edit Event</button>
+                <button onClick={onDeleteSubmit}>Delete Event</button>
+            </div>
+            <div>
+                <h3>Menu</h3>
+                <Menu menu={menu}/>
+                <h3>Invitations/Guests</h3>
+                <Guests info={guestSample}/>
+                <div>
+                <button onClick={onInviteSubmit}>Invite a Friend</button> 
+                <div>
+            </div>
         </div>
-      </div>
+        </div></div>
         
     )
 }
+
+const mapState = state => {
+    return {
+        events: state.event.events,
+        isEditing: state.event.isEditing,
+        isLoading: state.event.isLoading,
+        errors: state.event.errors
+    }
+}
+
+export default connect(mapState, { deleteEvent })(SingleEvent)

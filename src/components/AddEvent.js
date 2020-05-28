@@ -129,7 +129,7 @@ const mapState = state => {
   return ({
     isLoading: state.event.isLoading,
     errors: state.event.errors,
-    userID: state.user.name
+    userID: state.user.id
   })
 }
 

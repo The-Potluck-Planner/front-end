@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { axiosWithAuth, BASE_URL } from '../utils/axiosAuth'
+import { getFoods, addFood, editFood, deleteFood } from '../store/actions'
 
 const formInit = {
     name: '',
@@ -8,25 +10,19 @@ const formInit = {
     category: '',
 }
 
-function Menu(props) {
+function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
+    let message
     const [adding, setAdding] = useState(false)
     const [editing, setEditing] = useState(false)
-    const [selected, setSelected] = useState(props.menu)
+    const [selected, setSelected] = useState(menu)
     const { id } = useParams()
     const [form, setForm] = useState({...formInit, eventID: id})
     
 
 
     useEffect(() => {
-        axiosWithAuth()
-            .get(`${BASE_URL}api/events/${id}/food`)
-            .then(res => {
-                if (res.data.length) {
-                    setSelected(res.data)
-                }
-            })
-            .catch(err => console.log({err}))
-    }, [id])
+        getFoods(id)
+    }, [id, getFoods])
 
     const toggleSelect = itemId => {
         const newTodos = selected.map(item => {
@@ -50,17 +46,29 @@ function Menu(props) {
         //ADD MENU ITEM CODE HERE
 
     }
+    if (selected.length === 0) {
+         message =  <h2>No menu items. Please add</h2>
+    }
 
 
 
     return (
         <div>
-            {selected.map((item, index) => {
+            {selected.map( item => {
                 return (
-                    <li onClick={() => toggleSelect(item.id)} key={item.id}  className={item.selected ? 'selected': ''}>{item.name}</li>
+                    <li 
+                        onClick={() => toggleSelect(item.id)} key={item.id}  
+                        className={item.selected ? 'selected': ''}>
+                        {item.name}
+                    </li>
                 )
             })}
-
+            {  message }
+            <div className='menu-buttons'>
+                <button onClick={() => null }>Add Menu Item</button>
+                <button onClick={() => null }>Edit Menu Item</button>
+                <button onClick={() => null }>Delete Menu Item</button>
+            </div>
             {/* ##### EDIT FORM */
              editing &&(
                  <>
@@ -138,4 +146,10 @@ function Menu(props) {
     )
 }
 
-export default Menu
+const mapState = state => {
+    return {
+        menu: state.food.menu
+    }
+}
+
+export default connect(mapState, { getFoods, addFood, editFood, deleteFood })(Menu)

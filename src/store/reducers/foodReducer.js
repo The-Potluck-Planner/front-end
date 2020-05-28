@@ -23,11 +23,11 @@ const init = {
 export const foodReducer = (state = init, action) => {
     switch(action.type) {
         case GET_FOODS_START:
-            return { ...state }
+            return { ...state, isLoading: true }
         case GET_FOODS_SUCCESS:
-            return { ...state }
+            return { ...state, isLoading: false, menu: action.payload }
         case GET_FOODS_FAILURE:
-            return { ...state }
+            return { ...state, isLoading: false, errors: action.payload }
         case EDIT_FOOD_START:
             return { ...state }
         case EDIT_FOOD_SUCCESS:
