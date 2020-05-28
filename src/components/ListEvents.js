@@ -33,15 +33,16 @@ function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, 
       {events &&
         events.map((event) => {
           return (
-            <Link to={`/events/${event.id}`}>
+            
             <div key={event.id}>
+            <Link to={`/events/${event.id}`}>
               <p>Event: {event.title}</p>
               <p>Location:{event.location}</p>
               <p>Date: {event.month} {event.day} {event.year}</p>
               <p>Time: {event.time_From}-{event.time_To}</p>
-              <button onClick={() => push(`/edit/${event.id}`)} >Edit Event</button>
+              </Link>
             </div>
-            </Link>
+            
           );
         })}
     </div>
