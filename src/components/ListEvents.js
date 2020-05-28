@@ -1,18 +1,61 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { getEvents } from "../store/actions";
+import { useHistory, Link } from 'react-router-dom'
 
-function ListEvents(props){
-    
-   
-     console.log(props)
+function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, rsvps }) {
+  //let list
+  const { push } = useHistory()
+
+  useEffect(() => {
+    getEvents(userID);
+  }, [getEvents, userID]);
+
+  if (isLoading) {
+    return <h2>Loading events...</h2>;
+  } else if (errors) {
     return (
-         <div>
-           <p>Event: {props.info.title}</p>
-           <p>Location:{props.info.location}</p>
-           <p>Date: {props.info.month} {props.info.day} {props.info.year}</p>
-           <p>Time: {props.info.time_From}-{props.info.time_To}</p>
-         </div>
-    )
+      <>
+        <h2>Uh oh, something went wrong</h2>
+        {console.log(errors)}
+      </>
+    );
+  }
+  // if (eventsList === 'events') {
+  //   list = [...events]
+  // } else if (eventsList === 'rsvps') {
+  //   list = [...rsvps]
+  // }
 
+  return (
+    <div>
+      <h2>Upcoming Events</h2>
+      {events &&
+        events.map((event) => {
+          return (
+            <Link to={`/events/${event.id}`}>
+            <div key={event.id}>
+              <p>Event: {event.title}</p>
+              <p>Location:{event.location}</p>
+              <p>Date: {event.month} {event.day} {event.year}</p>
+              <p>Time: {event.time_From}-{event.time_To}</p>
+              <button onClick={() => push(`/edit/${event.id}`)} >Edit Event</button>
+            </div>
+            </Link>
+          );
+        })}
+    </div>
+  );
 }
 
-export default ListEvents
+const mapState = (state) => {
+  return {
+    events: state.event.events,
+    rsvps: state.event.rsvps,
+    isLoading: state.event.isLoading,
+    errors: state.event.errors,
+    userID: state.user.name,
+  };
+};
+
+export default connect(mapState, { getEvents })(ListEvents);

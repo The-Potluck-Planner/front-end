@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { connect } from 'react-redux'
-import { addEvent as createEvent } from '../store/actions'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { connect,  } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { editEvent } from '../store/actions'
+import { axiosWithAuth, BASE_URL } from '../utils/axiosAuth'
 
 const initialEvent = {
   title: "",
@@ -12,11 +13,23 @@ const initialEvent = {
   year: "",
   time_From: "",
   time_To: "",
+  userID: 0,
 };
 
-function AddEvent({createEvent, isLoading, errors, userID}) {
-  const { push } = useHistory()
+function EditEvent({createEvent, isLoading, errors, userID, editEvent}) {
   const [event, setEvent] = useState(initialEvent);
+  const { id } = useParams()
+
+  useEffect(() => {
+      console.log('USE EFFECT ENTERED')
+    axiosWithAuth()
+        .get(`${BASE_URL}api/events/${id}`)
+        .then(res => {
+            console.log('ABOUT TO SET DATA', res.data)
+            setEvent(res.data[0])
+        })
+        .catch(err => console.log({err}))
+  }, [id])
 
   const onInputChange = evt => {
     const { name, value } = evt.target;
@@ -25,20 +38,22 @@ function AddEvent({createEvent, isLoading, errors, userID}) {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    console.log("submit clicked");
-    createEvent({ 
-      ...event, 
-      userID: userID,
-      time_To: Number(event.time_To),
-      time_From: Number(event.time_From),
-    }).then(res => {
-        push('/')
-    })
+    const modifiedEvent = {
+        ...event, 
+        userID: Number(userID),
+        time_To: Number(event.time_To),
+        time_From: Number(event.time_From)
+    }
+    console.log('submit clicked', {modifiedEvent})
+    editEvent(modifiedEvent, id)
+        .then(res => {
+            console.log('FROM EDIT PAGE',res)
+        })
   };
 
   return (
     <form>
-      <h1> Add an Event</h1>
+      <h1> Edit Event</h1>
 
       <label>
         Title:&nbsp;
@@ -133,4 +148,4 @@ const mapState = state => {
   })
 }
 
-export default connect(mapState, { createEvent })(AddEvent)
+export default connect(mapState, { editEvent })(EditEvent)

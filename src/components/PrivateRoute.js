@@ -14,11 +14,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={() => {
+      render={(props) => {
         if (token) {
           // render component
           console.log('about to render private component')
-          return <Component />;
+          return <Component {...props}/>;
         } else {
           // redirect to login
           console.log('Sorry, not logged in')
