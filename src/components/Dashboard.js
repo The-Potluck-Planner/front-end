@@ -16,6 +16,7 @@ export default function Dashboard(props) {
             <ListEvents eventsList='events'/>
             <Link to='/addevent'><button>Add an Event</button></Link>
             {/* <ListEvents eventsList='rsvps'/> */}
+
         </div>
     )
 }

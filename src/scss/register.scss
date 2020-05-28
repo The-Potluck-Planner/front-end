@@ -1,0 +1,59 @@
+.registerContainer{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:10%;
+
+.registerForm{
+ 
+    border: 4px solid #386A6C;
+    border-radius: 8%;
+    width: 50%;
+    height:25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2%;
+
+    h1{
+        letter-spacing: .2rem;
+    }
+    .textArea{
+     //   border: 4px solid #386A6C;
+        height:40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: right;
+        padding-bottom: 2%;
+
+    }
+
+    label{
+        font-size: 1.2rem;
+        color: #386A6C;
+        
+    }
+
+    input{
+        border: 1px solid #386A6C;
+        border-radius: 10%;
+        height:1rem;
+    }
+    button{
+         width:20%;
+         height:2rem;
+         font-size:1.2rem;
+         letter-spacing: .1rem;
+         border-radius: 10%;
+         background-color:  #386A6C;
+    }
+    .errorMessage{
+        color:red;
+    }
+
+}
+
+}
