@@ -137,8 +137,14 @@ export const getFoods = eventID => dispatch => {
     dispatch({ type: GET_FOODS_START })
     axiosWithAuth()
         .get(`api/events/${eventID}/food`)
-        .then(res => console.log(res))
-        .catch(err => console.log({err}))
+        .then(res => {
+            console.log(res)
+            dispatch({ type: GET_FOODS_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            console.log({err})
+            dispatch({ type: GET_FOODS_FAILURE, payload: err })
+        })
 }
 
 //POST
