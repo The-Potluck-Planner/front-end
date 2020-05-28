@@ -13,9 +13,9 @@ export default function Dashboard(props) {
     return (
         <div>
             <h1>Hello {name} </h1>
-            <ListEvents eventsList={events}/>
+            <ListEvents eventsList='events'/>
             <Link to='/addevent'><button>Add an Event</button></Link>
-            <ListEvents eventsList={rsvps}/>
+            {/* <ListEvents eventsList='rsvps'/> */}
         </div>
     )
 }

@@ -98,3 +98,42 @@ export const editEvent = (event, id) => dispatch => {
             })
     //do stuff here
 }
+
+
+//#################  FOOD  #######################
+
+//GET
+export const GET_FOODS_START = 'GET_FOODS_START'
+export const GET_FOODS_SUCCESS = 'GET_FOODS_SUCCESS'
+export const GET_FOODS_FAILURE = 'GET_FOODS_FAILURE'
+
+export const getFoods = () => {
+
+}
+
+//POST
+export const ADD_FOOD_START = 'ADD_FOOD_START'
+export const ADD_FOOD_SUCCESS = 'ADD_FOOD_SUCCESS'
+export const ADD_FOOD_FAILURE = 'ADD_FOOD_FAILURE'
+
+export const addFood = food => {
+
+}
+
+//PUT
+export const EDIT_FOOD_START = 'EDIT_FOOD_START'
+export const EDIT_FOOD_SUCCESS = 'EDIT_FOOD_SUCCESS'
+export const EDIT_FOOD_FAILURE = 'EDIT_FOOD_FAILURE'
+
+export const editFood = foodID => {
+    
+}
+
+//Delete
+export const DELETE_FOOD_START = 'DELETE_FOOD_START'
+export const DELETE_FOOD_SUCCESS = 'DELETE_FOOD_SUCCESS'
+export const DELETE_FOOD_FAILURE = 'DELETE_FOOD_FAILURE'
+
+export const deleteFood = foodID => {
+
+}

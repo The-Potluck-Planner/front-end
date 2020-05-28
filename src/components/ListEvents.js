@@ -4,7 +4,7 @@ import { getEvents } from "../store/actions";
 import { useHistory, Link } from 'react-router-dom'
 
 function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, rsvps }) {
-
+  //let list
   const { push } = useHistory()
 
   useEffect(() => {
@@ -21,13 +21,17 @@ function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, 
       </>
     );
   }
-  const list = (eventsList === events ? events : rsvps)
-  console.log('THIS IS THE DATA',{list})
+  // if (eventsList === 'events') {
+  //   list = [...events]
+  // } else if (eventsList === 'rsvps') {
+  //   list = [...rsvps]
+  // }
+
   return (
     <div>
-      <h2>{(eventsList === events ? 'Hosted Events' : 'Invitations')}</h2>
-      {list &&
-        list.map((event) => {
+      <h2>Upcoming Events</h2>
+      {events &&
+        events.map((event) => {
           return (
             <Link to={`/events/${event.id}`}>
             <div key={event.id}>

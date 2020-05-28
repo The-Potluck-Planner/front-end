@@ -44,7 +44,7 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
 
   const logOut = () => {
     localStorage.removeItem('token')
-    push('login')
+    push('/login')
   }
 
 
@@ -132,11 +132,7 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
     <h1>Potluck Planner</h1>
     {displayButton()}
     <Link to='/'>Home</Link>
-    <Link to='/addfood'>Add Food</Link>
     <Switch>
-      <Route exact path="/addfood">
-        <AddMenuItem />
-      </Route>
       <Route exact path="/events/:id">
         <SingleEvent />
       </Route>
