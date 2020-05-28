@@ -11,6 +11,7 @@ const formInit = {
 }
 
 function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
+    let message
     const [adding, setAdding] = useState(false)
     const [editing, setEditing] = useState(false)
     const [selected, setSelected] = useState(menu)
@@ -20,15 +21,8 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
 
 
     useEffect(() => {
-        axiosWithAuth()
-            .get(`${BASE_URL}api/events/${id}/food`)
-            .then(res => {
-                if (res.data.length) {
-                    setSelected(res.data)
-                }
-            })
-            .catch(err => console.log({err}))
-    }, [id])
+        getFoods(id)
+    }, [id, getFoods])
 
     const toggleSelect = itemId => {
         const newTodos = selected.map(item => {
@@ -52,16 +46,24 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
         //ADD MENU ITEM CODE HERE
 
     }
+    if (selected.length === 0) {
+         message =  <h2>No menu items. Please add</h2>
+    }
 
 
 
     return (
         <div>
-            {selected.map((item, index) => {
+            {selected.map( item => {
                 return (
-                    <li onClick={() => toggleSelect(item.id)} key={item.id}  className={item.selected ? 'selected': ''}>{item.name}</li>
+                    <li 
+                        onClick={() => toggleSelect(item.id)} key={item.id}  
+                        className={item.selected ? 'selected': ''}>
+                        {item.name}
+                    </li>
                 )
             })}
+            {  message }
             <div className='menu-buttons'>
                 <button onClick={() => null }>Add Menu Item</button>
                 <button onClick={() => null }>Edit Menu Item</button>
@@ -144,4 +146,10 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
     )
 }
 
-export default connect(null, { getFoods, addFood, editFood, deleteFood })(Menu)
+const mapState = state => {
+    return {
+        menu: state.food.menu
+    }
+}
+
+export default connect(mapState, { getFoods, addFood, editFood, deleteFood })(Menu)
