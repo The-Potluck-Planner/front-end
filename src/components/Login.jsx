@@ -19,7 +19,7 @@ function Login(props) {
   return (
     <div className="formContainer">
       <form className="loginForm">
-        <h1>Welcome The to Potluck Planner</h1>
+        <h2>Welcome Aboard</h2>
         <div className="errorMessage">{props.otherErrors && props.otherErrors}</div>
         <label>
           username:&nbsp;

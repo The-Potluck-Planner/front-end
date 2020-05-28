@@ -1,7 +1,22 @@
+.dashboardContainer{
+
+    .createEventButton{
+        width:20%;
+         height:2rem;
+         font-size:1.2rem;
+         letter-spacing: .1rem;
+         border-radius: 10%;
+         background-color:  #386A6C;
+         color:white;
+   
+    }
+
 .eventsContainer{
 
     width:100%;
     display: flex;
     justify-content: space-around;
+
+}
 
 }

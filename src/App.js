@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './App.scss';
 import { connect } from 'react-redux'
 import { login as userLogin, register as registerUser } from './store/actions'
 import PrivateRoute from './components/PrivateRoute'
@@ -123,16 +123,21 @@ function App({isValidating, errors, name, userLogin, registerUser}) {
     if (localStorage.getItem("token")) {
       console.log('token present')
       return (
-        <button onClick={logOut}>Log out</button>
+        <button id="logout" onClick={logOut}>Log out</button>
       )
     }
   }
 
   return (
     <div className="App">
-    <h1>Potluck Planner</h1>
+      <div className="header">
+    <h1>The Potluck Planner</h1>
+  
+     <div className="nav">
+    <Link id="homeLink" to='/'>Home</Link>
     {displayButton()}
-    <Link to='/'>Home</Link>
+    </div>
+    </div>
     <Switch>
       <Route exact path="/events/:id">
         <SingleEvent />
