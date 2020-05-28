@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Menu from './Menu'
 import { useParams, useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import Guests from './Guests'
 
 const menu = [
     {id:1, name:'Main dish', selected: false,}, 
@@ -19,7 +20,6 @@ export default function SingleEvent(props) {
     const { push } = useHistory()
     const { id } = useParams()
     const { events } = useSelector(state => state.event)
-    const [isEdit, setIsEdit] = useState(false)
 
     const event = events.filter(event => event.id == id)
     console.log(id, events, event)
@@ -33,16 +33,15 @@ export default function SingleEvent(props) {
         console.log('invite a friend clicked')
     }
 
-    const onEditSubmit=evt=>{
-        evt.preventDefault()
-        setIsEdit(true)
-
-    }
-
     const onDeleteSubmit=evt=>{
         evt.preventDefault()
         console.log('Delete event clicked')
 
+    }
+
+    const guestSample={
+        name: 'suzi',
+        RSVP: false
     }
 
     return (
@@ -56,10 +55,9 @@ export default function SingleEvent(props) {
         <h3>Menu</h3>
         <Menu menu={menu}/>
         <h3>Invitations/Guests</h3>
-        <p>TBD</p>
+        <Guests info={guestSample}/>
           <div>
             <button onClick={onInviteSubmit}>Invite a Friend</button> 
-            <button onClick={onEditSubmit}> Edit Event</button>
             <button onClick={onDeleteSubmit}>Delete Event</button>
            <div>
 

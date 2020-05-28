@@ -30,7 +30,7 @@ function Login(props) {
             onChange={onInputChange}
           />
         </label>
-        <div>{errors.username}</div>
+        <div className="errorMessage">{errors.username}</div>
         <label>
           password:&nbsp;
           <input
@@ -40,7 +40,7 @@ function Login(props) {
             onChange={onInputChange}
           />
         </label>
-        <div>{errors.password}</div>
+        <div className="errorMessage">{errors.password}</div>
         <button onClick={onLogin}>Login</button>
         <Link className="registerLink" to="./register">dont't have an account? Register now.</Link>
       </form>
