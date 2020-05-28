@@ -1,4 +1,5 @@
 import React from 'react'
+import '../scss/register.scss'
 
 function Register(props){
 
@@ -11,10 +12,10 @@ function Register(props){
     }=props
 
     return(
-       <>
-       <form>
-     <h1>Welcome to Potluck Planner</h1>
-
+       <div className="registerContainer">
+       <form className="registerForm">
+     <h1>Welcome to The Potluck Planner</h1>
+     <div className="textArea">
      <label>Name:&nbsp;
 
     <input type='text' 
@@ -33,7 +34,7 @@ function Register(props){
 
     </label>
 
-    <div>{errors.username}</div>
+    <div className='errorMessage'>{errors.username}</div>
 
      <label> Password:&nbsp; 
 
@@ -43,12 +44,13 @@ function Register(props){
              onChange={onInputChange}/>
     </label>
 
-     <div>{errors.password}</div>
+     <div className='errorMessage'>{errors.password}</div>
+     </div>
 
      <button onClick={onSubmit}>Submit</button>
         </form>
      
-      </>
+      </div>
     )
 }
 

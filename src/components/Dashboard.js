@@ -41,7 +41,8 @@ export default function Dashboard({name}) {
 
             {
                 events.map((event,index) => {
-                   return (<ListEvents key={index} info={event}/>)
+                   return (
+                   <ListEvents key={index} info={event}/>)
                 })
           
             }

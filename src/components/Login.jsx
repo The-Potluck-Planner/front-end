@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import '../scss/login.scss'
 
 
 function Login(props) {
@@ -16,10 +17,10 @@ function Login(props) {
   }
 
   return (
-    <>
-      <form>
-        <h1>Welcome to Potluck Planner</h1>
-        {props.otherErrors && <div>{props.otherErrors}</div>}
+    <div className="formContainer">
+      <form className="loginForm">
+        <h1>Welcome The to Potluck Planner</h1>
+        <div className="errorMessage">{props.otherErrors && props.otherErrors}</div>
         <label>
           username:&nbsp;
           <input
@@ -41,9 +42,10 @@ function Login(props) {
         </label>
         <div>{errors.password}</div>
         <button onClick={onLogin}>Login</button>
+        <Link className="registerLink" to="./register">dont't have an account? Register now.</Link>
       </form>
-      <Link to="./register">dont't have an account? Register now.</Link>
-    </>
+ 
+    </div>
   );
 }
 
