@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect,  } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { editEvent } from '../store/actions'
 import { axiosWithAuth, BASE_URL } from '../utils/axiosAuth'
 
@@ -19,6 +19,7 @@ const initialEvent = {
 function EditEvent({createEvent, isLoading, errors, userID, editEvent}) {
   const [event, setEvent] = useState(initialEvent);
   const { id } = useParams()
+  const { push } = useHistory()
 
   useEffect(() => {
       console.log('USE EFFECT ENTERED')
@@ -47,7 +48,8 @@ function EditEvent({createEvent, isLoading, errors, userID, editEvent}) {
     console.log('submit clicked', {modifiedEvent})
     editEvent(modifiedEvent, id)
         .then(res => {
-            console.log('FROM EDIT PAGE',res)
+            //res.success[0]
+            push('/')
         })
   };
 

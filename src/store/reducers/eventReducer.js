@@ -7,7 +7,10 @@ import {
     ADD_EVENTS_FAILURE,
     EDIT_EVENT_START,
     EDIT_EVENT_SUCCESS,
-    EDIT_EVENT_FAILURE
+    EDIT_EVENT_FAILURE,
+    DELETE_EVENT_START,
+    DELETE_EVENT_SUCCESS,
+    DELETE_EVENT_FAILURE
 } from '../actions'
 
 const init = {
@@ -33,11 +36,24 @@ export const eventReducer = (state = init, action) => {
         case ADD_EVENTS_FAILURE:
             return { ...state, isLoading:false, errors: action.payload }
         case EDIT_EVENT_START:
-            return { ...state }
+            return { ...state, isEditing: true, isLoading: true, errors:'' }
         case EDIT_EVENT_SUCCESS:
-            return { ...state }
+            const newEvents = state.events.map(event => {
+                if (action.payload.id === event.id) {
+                    return action.payload
+                }
+                return event
+            })
+            return { ...state, isEditing: false, isLoading: false, events: newEvents }
         case EDIT_EVENT_FAILURE:
-            return { ...state }
+            return { ...state, isEditing:false, isLoading: false, errors: action.payload }
+        case DELETE_EVENT_START:
+            const lessEvents = state.events.filter(event => event.id !== action.payload )
+            return { ...state, isLoading: true, events: lessEvents }
+        case DELETE_EVENT_SUCCESS:
+            return { ...state, isLoading: false }
+        case DELETE_EVENT_FAILURE:
+            return { ...state, isLoading: false, errors: action.payload }
         default: 
             return { ...state }
     }
