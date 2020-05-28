@@ -55,28 +55,27 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
 
     return (
         <div key={event[0].id}>
-        <h3>Event Details</h3>
-        <p>Event: {event[0].title}</p>
-        <p>Location:{event[0].location}</p>
-        <p>Date: {event[0].month} {event[0].day} {event[0].year}</p>
-        <p>Time: {event[0].time_From}-{event[0].time_To}</p>
-        <button onClick={() => push(`/edit/${event[0].id}`)} >Edit Event</button>
-        <div>
-            <button disabled onClick={onEditSubmit}> Edit Event</button>
-            <button onClick={onDeleteSubmit}>Delete Event</button>
-           <div>
-        <h3>Menu</h3>
-        <Menu menu={menu}/>
-        <h3>Invitations/Guests</h3>
-        <Guests info={guestSample}/>
-          <div>
-            <button onClick={onInviteSubmit}>Invite a Friend</button> 
-           <div>
-
-
-           </div>
+            <h3>Event Details</h3>
+            <p>Event: {event[0].title}</p>
+            <p>Location:{event[0].location}</p>
+            <p>Date: {event[0].month} {event[0].day} {event[0].year}</p>
+            <p>Time: {event[0].time_From}-{event[0].time_To}</p>
+            <button onClick={() => push(`/edit/${event[0].id}`)} >Edit Event</button>
+            <div>
+                <button disabled onClick={onEditSubmit}> Edit Event</button>
+                <button onClick={onDeleteSubmit}>Delete Event</button>
+            </div>
+            <div>
+                <h3>Menu</h3>
+                <Menu menu={menu}/>
+                <h3>Invitations/Guests</h3>
+                <Guests info={guestSample}/>
+                <div>
+                <button onClick={onInviteSubmit}>Invite a Friend</button> 
+                <div>
+            </div>
         </div>
-      </div>
+        </div></div>
         
     )
 }
