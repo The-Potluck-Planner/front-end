@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getEvents } from "../store/actions";
 import { useHistory, Link } from 'react-router-dom'
-
+import '../scss/ListEvents.scss'
 function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, rsvps }) {
   //let list
   const { push } = useHistory()
@@ -28,21 +28,23 @@ function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, 
   // }
 
   return (
-    <div>
+    <div className='upcomingEvents'>
       <h2>Upcoming Events</h2>
       {events &&
         events.map((event) => {
-          return (
+          return (        
             
+            <div className='eventLink' >
+            <Link to={`/events/${event.id}`} style={{ textDecoration: 'none' }}>
             <div key={event.id}>
-            <Link to={`/events/${event.id}`}>
-              <p>Event: {event.title}</p>
-              <p>Location:{event.location}</p>
-              <p>Date: {event.month} {event.day} {event.year}</p>
-              <p>Time: {event.time_From}-{event.time_To}</p>
-              </Link>
+              <p>Event:  {event.title}</p>
+              <p>Location:  {event.location}</p>
+              <p>Date:  {event.month}/{event.day}/{event.year}</p>
+              <p>Time:  {event.time_From}-{event.time_To}</p>
             </div>
-            
+            </Link>
+            </div>
+
           );
         })}
     </div>

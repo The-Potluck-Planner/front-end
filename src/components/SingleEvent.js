@@ -3,6 +3,7 @@ import Menu from './Menu'
 import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import { deleteEvent } from '../store/actions'
+import Guests from './Guests'
 
 const menu = [
     {id:1, name:'Main dish', selected: false,}, 
@@ -29,7 +30,7 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
   const onInviteSubmit= evt=>{
         evt.preventDefault()
     }
-
+  
     const onEditSubmit=evt=>{
         evt.preventDefault()
 
@@ -47,6 +48,11 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
         
     }
 
+    const guestSample={
+        name: 'suzi',
+        RSVP: false
+    }
+
     return (
         <div key={event[0].id}>
         <h3>Event Details</h3>
@@ -62,8 +68,11 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
         <h3>Menu</h3>
         <Menu menu={menu}/>
         <h3>Invitations/Guests</h3>
-        <p>TBD</p>
-        <button onClick={onInviteSubmit}>Invite a Friend</button> 
+        <Guests info={guestSample}/>
+          <div>
+            <button onClick={onInviteSubmit}>Invite a Friend</button> 
+           <div>
+
 
            </div>
         </div>
