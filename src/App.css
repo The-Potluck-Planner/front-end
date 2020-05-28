@@ -1,6 +1,7 @@
 html,body{
   background-color: #CED4D8;
   height:100%;
+}
 
 .selected {
   background-color: green;
