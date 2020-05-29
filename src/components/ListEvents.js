@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getEvents } from "../store/actions";
 import { useHistory, Link } from 'react-router-dom'
 import '../scss/ListEvents.scss'
-function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, rsvps }) {
+function ListEvents({ title, getEvents, events, isLoading, errors, userID, eventsList, rsvps }) {
   //let list
   const { push } = useHistory()
 
@@ -36,9 +36,9 @@ function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, 
 
   return (
     <div className='myEvents'>
-      <h2>My Events</h2>
-      {events &&
-        events.map((event) => {
+      <h2>{title}</h2>
+      {eventsList &&
+        eventsList.map((event) => {
           return (        
             
             <div className='eventLink' >

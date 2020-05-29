@@ -2,7 +2,7 @@ import axios from 'axios'
 import { BASE_URL, axiosWithAuth } from '../../utils/axiosAuth'
 
 
-//LOGIN AND REGISTER
+// REGISTER
 export const REGISTER_START = 'REGISTER_START'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const REGISTER_FAILURE = 'REGISTER_FAILURE'
@@ -22,6 +22,8 @@ export const register = newUser => dispatch => {
         })
 }
 
+// LOGIN 
+
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -40,6 +42,69 @@ export const login = user => dispatch => {
             return err.response.request.status
         })
 }
+
+//GET ALL USERS FOR INVITATIONS
+
+export const GET_USERS_START = 'GET_USERS_START'
+export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
+export const GET_USERS_FAILURE = 'GET_USERS_FAILURE'
+
+export const getUsers = () => dispatch => {
+    dispatch({ type: GET_USERS_START })
+    axiosWithAuth()
+        .get(`api/users`)
+        .then(res => {
+            console.log(res.data)
+            dispatch({ type: GET_USERS_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            console.log({err})
+            dispatch({ type: GET_USERS_FAILURE, payload: err})
+        })
+}
+
+// INVITE USERS TO EVENT
+
+export const INVITE_USER_START = 'INVITE_USER_START'
+export const INVITE_USER_SUCCESS = 'INVITE_USER_SUCCESS'
+export const INVITE_USER_FAILURE = 'INVITE_USER_FAILURE'
+
+export const inviteUser = (event, userID) => dispatch => {
+    dispatch({ type: INVITE_USER_START })
+    axiosWithAuth()
+        .post(`api/events/${event}/invited`, userID)
+        .then(res => {
+            console.log(res.data)
+            dispatch({ type: INVITE_USER_SUCCESS, payload: res.data})
+        })
+        .catch(err => {
+            console.log({err})
+            dispatch({ type: INVITE_USER_FAILURE, payload: err})
+        })
+}
+
+// GET INVITED GUESTS
+
+export const GET_GUESTS_START = 'GET_GUESTS_START'
+export const GET_GUESTS_SUCCESS = 'GET_GUESTS_SUCCESS'
+export const GET_GUESTS_FAILURE = 'GET_GUESTS_FAILURE'
+
+export const getGuests = (event) => dispatch => {
+    dispatch({ type: GET_GUESTS_START })
+    axiosWithAuth()
+        .get(`api/events/${event}/invited`)
+        .then(res => {
+            console.log(res.data)
+            dispatch({ type: GET_GUESTS_SUCCESS, payload: res.data})
+        })
+        .catch(err => {
+            console.log({err})
+            dispatch({ type: GET_GUESTS_FAILURE, payload: err })
+        })
+}
+
+
+
 
 //#################  EVENTS  #######################
 

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { getGuests } from '../store/actions'
 import styled from 'styled-components'
 import '../scss/Guests.scss'
 
 
-function Guests(props){
-
+function Guests(){
     const RsvpIndicator=styled.span`
         height: 15px;
         width:15px;
@@ -14,14 +16,25 @@ function Guests(props){
         ${props=>(props.RSVP===true ? `background-color: green`: `background-color:red`)}
 
     `
-    console.log(props.info.RSVP)
+    const dispatch = useDispatch()
+    const { guests } = useSelector(event => event.user)
+    const { id } = useParams()
+    
+    useEffect(() => {
+        dispatch(getGuests(id))
+    }, [dispatch, id])
 
     return(
 
-        <div className="guestDisplay">
-          <p>{props.info.name}</p>
-          <p> RSVP: <RsvpIndicator RSVP={props.info.RSVP}></RsvpIndicator></p> 
-          
+        <div>
+            {guests && guests.map(guest => {
+               return (
+                   <>
+                    <p>{guest.name}</p>
+                    <RsvpIndicator RSVP={guest.RSVP}></RsvpIndicator>
+                   </>
+               )
+           })} 
         </div>
     )
 
