@@ -14,7 +14,7 @@ function Register(props){
     return(
        <div className="registerContainer">
        <form className="registerForm">
-     <h1>Welcome to The Potluck Planner</h1>
+     <h1>Welcome Aboard</h1>
      <div className="textArea">
      <label>Name:&nbsp;
 

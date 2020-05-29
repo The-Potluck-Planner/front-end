@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import { connect } from 'react-redux'
 import { addEvent as createEvent } from '../store/actions'
 import { useHistory } from 'react-router-dom'
+import '../scss/AddEvent.scss'
+
 
 const initialEvent = {
   title: "",
@@ -37,9 +39,9 @@ function AddEvent({createEvent, isLoading, errors, userID}) {
   };
 
   return (
-    <form>
-      <h1> Add an Event</h1>
-
+    <div className="addContainer">
+    <h1> Add an Event</h1>
+    <form  className="formArea">
       <label>
         Title:&nbsp;
         <input
@@ -122,6 +124,7 @@ function AddEvent({createEvent, isLoading, errors, userID}) {
 
       <button onClick={onSubmit}>Submit</button>
     </form>
+    </div>
   );
 }
 
