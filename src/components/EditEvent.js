@@ -3,6 +3,7 @@ import { connect,  } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { editEvent } from '../store/actions'
 import { axiosWithAuth, BASE_URL } from '../utils/axiosAuth'
+import '../scss/AddEvent.scss'
 
 const initialEvent = {
   title: "",
@@ -54,9 +55,9 @@ function EditEvent({createEvent, isLoading, errors, userID, editEvent}) {
   };
 
   return (
-    <form>
-      <h1> Edit Event</h1>
-
+    <div className="addContainer">
+    <h1> Add an Event</h1>
+    <form  className="formArea">
       <label>
         Title:&nbsp;
         <input
@@ -139,6 +140,7 @@ function EditEvent({createEvent, isLoading, errors, userID, editEvent}) {
 
       <button onClick={onSubmit}>Submit</button>
     </form>
+    </div>
   );
 }
 
