@@ -56,7 +56,7 @@ function EditEvent({createEvent, isLoading, errors, userID, editEvent}) {
 
   return (
     <div className="addContainer">
-    <h1> Add an Event</h1>
+    <h1> Edit an Event</h1>
     <form  className="formArea">
       <label>
         Title:&nbsp;

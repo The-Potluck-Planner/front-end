@@ -5,22 +5,12 @@ import { useSelector, connect } from 'react-redux'
 import { deleteEvent } from '../store/actions'
 import Guests from './Guests'
 import '../scss/SingleEvent.scss'
-
-const menu = [
-    {id:1, name:'Main dish', selected: false,}, 
-    {id:2, name:'Main dish', selected: false,}, 
-    {id:3, name:'Fried Chicken', selected: false,},
-    {id:4, name:'Side dish', selected: false,},
-    {id:5, name:'Side dish', selected: false,},
-    {id:6, name:'Chips and Dip', selected: false,},
-    {id:7, name:'Drinks/Ice', selected: false,},
-    {id:8, name:'Plates/Utensils', selected: false,},
-    {id:9, name:'Dessert', selected: false,},
-]
+import UserList from './UserList'
 
 function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
     const { push } = useHistory()
     const { id } = useParams()
+    const [inviting, setInviting] = useState(false)
 
     const event = events.filter(event => event.id == id)
 
@@ -30,6 +20,8 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
   
   const onInviteSubmit= evt=>{
         evt.preventDefault()
+
+        setInviting(!inviting)
     }
   
     const onEditSubmit=evt=>{
@@ -50,8 +42,12 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
     }
 
     const guestSample={
-        name: 'suzi',
+        name: 'Andy',
         RSVP: false
+    }
+    const guestSample2={
+        name: 'Suzie',
+        RSVP: true
     }
 
     return (
@@ -76,7 +72,14 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
                 <div className="guestSection">
                 <h3>Invitations/Guests</h3>
                 <Guests info={guestSample}/>
+                <Guests info={guestSample2}/>
                 <button onClick={onInviteSubmit}>Invite a Friend</button> 
+                {inviting && (
+                    <>
+                    <h4>Choose a friend to invite</h4>
+                    <UserList />
+                    </>
+                )}
                 </div>
         </div>
         
