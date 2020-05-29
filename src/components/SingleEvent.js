@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import { deleteEvent } from '../store/actions'
 import Guests from './Guests'
+import '../scss/SingleEvent.scss'
 
 const menu = [
     {id:1, name:'Main dish', selected: false,}, 
@@ -54,7 +55,9 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
     }
 
     return (
-        <div key={event[0].id}>
+      
+        <div   className="contentContainer" key={event[0].id}>
+            <div className="eventDetails" >
             <h3>Event Details</h3>
             <p>Event: {event[0].title}</p>
             <p>Location:{event[0].location}</p>
@@ -65,17 +68,18 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
                 <button disabled onClick={onEditSubmit}> Edit Event</button>
                 <button onClick={onDeleteSubmit}>Delete Event</button>
             </div>
-            <div>
+            </div>
+                <div className="menuSection">
                 <h3>Menu</h3>
                 <Menu menu={menu}/>
+                </div>
+                <div className="guestSection">
                 <h3>Invitations/Guests</h3>
                 <Guests info={guestSample}/>
-                <div>
                 <button onClick={onInviteSubmit}>Invite a Friend</button> 
-                <div>
-            </div>
+                </div>
         </div>
-        </div></div>
+        
         
     )
 }

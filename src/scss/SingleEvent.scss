@@ -1,0 +1,43 @@
+.contentContainer{
+
+   // border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    width :100%;
+    padding-top:2%;
+
+    .eventDetails{
+        width :100%;
+        //border: 2px solid blue;
+        text-align: center;
+        margin-bottom: 2%;
+       
+    }
+   
+    .menuSection{
+        width :100%;
+        text-align: center;
+       // border: 2px solid green ;
+        margin-bottom: 2%;
+    }
+
+    .guestSection{
+        width :100%;
+        text-align: center;
+       // border: 2px solid yellow;
+        margin-bottom: 2%;
+    }
+
+    button{
+
+        width:15%;
+        height:2rem;
+        font-size:1.2rem;
+        letter-spacing: .1rem;
+        border-radius: 10%;
+        background-color:  #386A6C;
+        color:white;
+  
+    }
+}
