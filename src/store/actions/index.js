@@ -135,15 +135,17 @@ export const GET_FOODS_FAILURE = 'GET_FOODS_FAILURE'
 
 export const getFoods = eventID => dispatch => {
     dispatch({ type: GET_FOODS_START })
-    axiosWithAuth()
+    return axiosWithAuth()
         .get(`api/events/${eventID}/food`)
         .then(res => {
             console.log(res)
             dispatch({ type: GET_FOODS_SUCCESS, payload: res.data })
+            return res.data
         })
         .catch(err => {
             console.log({err})
             dispatch({ type: GET_FOODS_FAILURE, payload: err })
+            return {err}
         })
 }
 
@@ -153,7 +155,20 @@ export const ADD_FOOD_SUCCESS = 'ADD_FOOD_SUCCESS'
 export const ADD_FOOD_FAILURE = 'ADD_FOOD_FAILURE'
 
 export const addFood = food => dispatch => {
-
+    dispatch({ type: ADD_FOOD_START })
+    console.log("ATTEMPTING TO ADD =>", food)
+    return axiosWithAuth()
+    .post(`api/food`, food)
+    .then(res => {
+        console.log(res.data)
+        dispatch({ type: ADD_FOOD_SUCCESS, payload: res.data.food })
+        return res.data
+    })
+    .catch(err => {
+        console.log({err})
+        dispatch({ type: ADD_FOOD_FAILURE, payload: err })
+        return err
+    })
 }
 
 //PUT
@@ -161,8 +176,18 @@ export const EDIT_FOOD_START = 'EDIT_FOOD_START'
 export const EDIT_FOOD_SUCCESS = 'EDIT_FOOD_SUCCESS'
 export const EDIT_FOOD_FAILURE = 'EDIT_FOOD_FAILURE'
 
-export const editFood = foodID => dispatch => {
-    
+export const editFood = food => dispatch => {
+    dispatch({ type: EDIT_FOOD_START })
+    axiosWithAuth()
+        .put(`api/food/${food.id}`, food)
+        .then(res => {
+            console.log(res.data)
+            dispatch({ type: EDIT_FOOD_SUCCESS })
+        })
+        .catch(err => {
+            console.log({err})
+            dispatch({ type: EDIT_FOOD_FAILURE, payload: err })
+        })
 }
 
 //Delete
@@ -171,5 +196,19 @@ export const DELETE_FOOD_SUCCESS = 'DELETE_FOOD_SUCCESS'
 export const DELETE_FOOD_FAILURE = 'DELETE_FOOD_FAILURE'
 
 export const deleteFood = foodID => dispatch => {
+    dispatch({ type: DELETE_FOOD_START })
+
+    return axiosWithAuth()
+        .delete(`api/food/${foodID}`)
+        .then(res => {
+            console.log(res.data)
+            dispatch({ type: DELETE_FOOD_SUCCESS })
+            return res.data
+        })
+        .catch(err => {
+            console.log({err})
+            dispatch({ type: DELETE_FOOD_FAILURE, payload: err })
+            return err
+        })
 
 }

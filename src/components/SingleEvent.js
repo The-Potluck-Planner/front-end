@@ -71,7 +71,7 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
             </div>
                 <div className="menuSection">
                 <h3>Menu</h3>
-                <Menu menu={menu}/>
+                <Menu />
                 </div>
                 <div className="guestSection">
                 <h3>Invitations/Guests</h3>

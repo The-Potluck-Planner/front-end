@@ -35,17 +35,17 @@ export const foodReducer = (state = init, action) => {
         case EDIT_FOOD_FAILURE:
             return { ...state }
         case ADD_FOOD_START:
-            return { ...state }
+            return { ...state, isLoading: true, isEditing: true }
         case ADD_FOOD_SUCCESS:
-            return { ...state }
+            return { ...state, isLoading: false, isEditing: false }
         case ADD_FOOD_FAILURE:
-            return { ...state }
+            return { ...state, isLoading: false, errors: action.payload }
         case DELETE_FOOD_START:
-            return { ...state }
+            return { ...state, isLoading: true }
         case DELETE_FOOD_SUCCESS:
-            return { ...state }
+            return { ...state, isLoading: false, }
         case DELETE_FOOD_FAILURE:
-            return { ...state }
+            return { ...state, isLoading: false, errors: action.payload }
         default:
             return { ...state }
     }
