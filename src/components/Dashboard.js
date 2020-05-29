@@ -18,8 +18,10 @@ export default function Dashboard(props) {
             <Link to='/addevent'><button className="createEventButton">Create an Event</button></Link>
              </div>
             <div className="eventsContainer">
-            <ListEvents eventsList='events'/>
-            <ListEvents eventsList='events'/>
+            <ListEvents eventsList={events} title='Hosted Events'
+            />
+            <ListEvents eventsList={rsvps} title='Invitations'
+            />
             </div>
        
             {/* <ListEvents eventsList='rsvps'/> */}
