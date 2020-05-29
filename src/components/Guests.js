@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import '../scss/Guests.scss'
 
 
 function Guests(props){
 
     const RsvpIndicator=styled.span`
-        height: 20px;
-        width:20px;
+        height: 15px;
+        width:15px;
         border-radius:50%;
         display:inline-block;
 
@@ -17,10 +18,10 @@ function Guests(props){
 
     return(
 
-        <div>
+        <div className="guestDisplay">
           <p>{props.info.name}</p>
-          <p> RSVP:</p> 
-           <RsvpIndicator RSVP={props.info.RSVP}></RsvpIndicator>
+          <p> RSVP: <RsvpIndicator RSVP={props.info.RSVP}></RsvpIndicator></p> 
+          
         </div>
     )
 
