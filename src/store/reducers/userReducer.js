@@ -10,6 +10,7 @@ import {
 
 const init = {
     name:'',
+    id: 0,
     isValidating: false,
     errors:''
 }
@@ -19,7 +20,7 @@ export const userReducer = (state = init, action) => {
         case LOGIN_START:
             return { ...state, isValidating: true, errors: '' }
         case LOGIN_SUCCESS:
-            return { ...state, isValidating: false, name: action.payload.message }
+            return { ...state, isValidating: false, id: action.payload.id, name: action.payload.name ,errors: '' }
         case LOGIN_FAILURE:
             return { ...state, isValidating:false, errors: action.payload }
         case REGISTER_START:

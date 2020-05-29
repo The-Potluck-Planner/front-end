@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import './App.css';
+import './App.scss';
 import { connect } from 'react-redux'
 import { login as userLogin, register as registerUser } from './store/actions'
 import PrivateRoute from './components/PrivateRoute'
 import DashBoard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
-import { Switch ,Route, useHistory } from 'react-router-dom'
+import { Switch ,Route, useHistory, Link} from 'react-router-dom'
 import * as yup from 'yup'
 import formSchema from './validation/formSchema'
+import axios from 'axios'
+import AddEvent from './components/AddEvent'
+import EditEvent from './components/EditEvent'
+import AddMenuItem from './components/AddMenuItem'
+import SingleEvent from './components/SingleEvent'
 
  
 const initialLogin={
@@ -28,89 +33,128 @@ const initialRegister={
     confirmPassword:'',
 }
 
+
+
 function App({isValidating, errors, name, userLogin, registerUser}) {
   const { push } = useHistory()
-
   const [login, setLogin] = useState(initialLogin)
   const [register,setRegister] = useState(initialRegister)
   const [formErrors, setFormErrors]=useState(initialFormErrors)
 
-       const onInputChange = (evt) => {
 
-          const {name,value}=evt.target
+  const logOut = () => {
+    localStorage.removeItem('token')
+    push('/login')
+  }
 
-          yup.reach(formSchema, name)
-              .validate(value)
-              .then(valid=>{
-                setFormErrors({
-                  ...formErrors,
-                  [name]: ''
-                })
-              })
-              .catch((err)=>{
-                setFormErrors({
-                  ...formErrors,
-                  [name]: err.errors[0]
-                })
-              })
-              
-          
-          setLogin({...login,[name]:value})
-          console.log(login)
-       }
+
+  const onInputChange = (evt) => {
+    const {name,value}=evt.target
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then(valid=>{
+        setFormErrors({
+          ...formErrors,
+          [name]: ''
+        })
+      })
+      .catch((err)=>{
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0]
+        })
+      })
+    setLogin({...login,[name]:value})
+  }
     
-const registerOnInputChange = (evt) => {
-        const {name,value}=evt.target
-
-        yup.reach(formSchema, name)
-              .validate(value)
-              .then(valid=>{
-                setFormErrors({
-                  ...formErrors,
-                  [name]: ''
-                })})
-              .catch((err)=>{
-                setFormErrors({
-                  ...formErrors,
-                  [name]: err.errors[0]
-                })
-              })
-            
-        setRegister({...register,[name]:value})
-        console.log(register)
-     }
+  const registerOnInputChange = (evt) => {
+    const {name,value}=evt.target
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then( valid => {
+        setFormErrors({
+          ...formErrors,
+          [name]: ''
+        })
+      })
+      .catch((err)=>{
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0]
+        })
+      }) 
+    setRegister({...register,[name]:value})
+  }
 
   const onLogin= evt => {
     evt.preventDefault();
-    console.log('login button clicked')
     userLogin(login)
-    if (errors.length){
-      setTimeout(() => {
+    .then(res => {
+      if (res === 200) {
         push('/')
-      }, 1000)
-    }
+      } 
+    })
+    setLogin(initialLogin)
   }
 
   const onSubmit= evt => {
     evt.preventDefault();
+    console.log({
+      name: register.name,
+      username: register.username,
+      password: register.password
+    })
     registerUser({
       name: register.name,
       username: register.username,
       password: register.password
-    }) 
-    console.log('Register button clicked')
+    }).then(status => {
+      console.log(status)
+      if (status === 201) {
+        push('/login')
+      }
+    })
+    setRegister(initialRegister) 
+  }
+
+  const displayButton = () => {
+    if (localStorage.getItem("token")) {
+      console.log('token present')
+      return (
+        <button id="logout" onClick={logOut}>Log out</button>
+      )
+    }
   }
 
   return (
     <div className="App">
+      <div className="header">
+    <h1>The Potluck Planner</h1>
+  
+     <div className="nav">
+    <Link id="homeLink" to='/'>Home</Link>
+    {displayButton()}
+    </div>
+    </div>
     <Switch>
-      <PrivateRoute exact path='/' component={DashBoard} name={name} />
+      <Route exact path="/events/:id">
+        <SingleEvent />
+      </Route>
       <Route exact path="/login">
         <Login info={login} onInputChange={onInputChange} onLogin={onLogin} errors={formErrors} otherErrors={errors} />
       </Route>
       <Route exact path="/register">
         <Register info={register} onInputChange={registerOnInputChange} onSubmit={onSubmit} errors={formErrors}/>
       </Route>
+      <Route exact path='/addevent'>
+        <AddEvent/>
+      </Route>
+      <Route exact path='/edit/:id'>
+        <EditEvent />
+      </Route>
+      <PrivateRoute  path='/' component={DashBoard} />
     </Switch>
     </div>
   )

@@ -1,0 +1,43 @@
+
+
+.addContainer{
+    border: 3px solid #386A6C;
+    border-radius: 5%;
+    width:50%;
+    margin:auto;
+    margin-top:5%;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2%;
+    padding-top: 2%;
+
+    h2{
+        width:50%;
+  
+    }
+    .formArea{
+    height:30vh;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+   // border: 2px solid red;
+    width:50%;
+    text-align: right;
+
+    button{
+    width:40%;
+    height:2rem;
+    font-size:1.2rem;
+    letter-spacing: .1rem;
+    border-radius: 10%;
+    background-color:  #386A6C;
+    color:white;
+    margin-top: 2%;
+
+  
+}
+}
+
+}

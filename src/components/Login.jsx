@@ -1,56 +1,52 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-function Login(props){
-
-    const {
-       info,
-       onInputChange,
-       onLogin,
-       errors, 
-
-    }=props
-
-   return(
-       <>
-    <form>
-
-     <h1>Welcome to Potluck Planner</h1>
-     {props.otherErrors && <div>{props.otherErrors}</div>}
-     <label> username:&nbsp;   
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import '../scss/login.scss'
 
 
-     <input type='text' 
-            name='username'
-             value={info.username} 
-            onChange={onInputChange}/>
-    </label>
+function Login(props) {
 
-    <div>{errors.username}</div>
+  const isValidating = useSelector((state) => state.user.isValidating);
 
-     <label> password:&nbsp; 
+  const { info, onInputChange, onLogin, errors } = props;
 
-     <input type='password'
-             name='password' 
-             value={info.password}
-             onChange={onInputChange}/>
+  if (isValidating) {
+     return (
+        <h2>Logging in</h2>
+     )
+  }
 
-    </label>
-
-     <div>{errors.password}</div>
-
-     <button onClick={onLogin}>Login</button>
-        </form>
-
-     <Link to='./register'>
-       dont't have an account? Register now.
-     </Link>
-
-
-    </>
-
-   )
-
+  return (
+    <div className="formContainer">
+      <form className="loginForm">
+        <h2>Welcome Aboard</h2>
+        <div className="errorMessage">{props.otherErrors && props.otherErrors}</div>
+        <label>
+          username:&nbsp;
+          <input
+            type="text"
+            name="username"
+            value={info.username}
+            onChange={onInputChange}
+          />
+        </label>
+        <div className="errorMessage">{errors.username}</div>
+        <label>
+          password:&nbsp;
+          <input
+            type="password"
+            name="password"
+            value={info.password}
+            onChange={onInputChange}
+          />
+        </label>
+        <div className="errorMessage">{errors.password}</div>
+        <button onClick={onLogin}>Login</button>
+        <Link className="registerLink" to="./register">dont't have an account? Register now.</Link>
+      </form>
+ 
+    </div>
+  );
 }
 
-
-export default Login
+export default Login;
