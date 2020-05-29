@@ -6,15 +6,16 @@ import { getFoods, addFood, editFood, deleteFood } from '../store/actions'
 
 const formInit = {
     name: '',
-    quantitiy: '',
+    quantity: '',
     category: '',
 }
 
-function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
+function Menu({ getFoods, addFood, editFood, deleteFood, menu, isEditing }) {
     let message
     const [adding, setAdding] = useState(false)
     const [editing, setEditing] = useState(false)
     const [selected, setSelected] = useState(menu)
+    const [count, setCount] = useState(0)
     const { id } = useParams()
     const [form, setForm] = useState({...formInit, eventID: id})
     
@@ -22,7 +23,10 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
 
     useEffect(() => {
         getFoods(id)
-    }, [id, getFoods])
+            .then(res => {
+                setSelected(res)
+            })
+    }, [id, getFoods, count])
 
     const toggleSelect = itemId => {
         const newTodos = selected.map(item => {
@@ -44,8 +48,44 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
     const handleSubmit = e => {
         e.preventDefault()
         //ADD MENU ITEM CODE HERE
+        console.log('submitted')
+        if (adding) {
+            addFood(form)
+                .then(res => {
+                    setCount(count + 1)
+                })
+            setAdding(false)
+            setForm({...formInit, eventID: id})
+            
+        } else if (editing) {
+            editFood(form)
+            setEditing(!adding)
+            setForm({...formInit, eventID: id})
+            setCount(count + 1)
+        }
 
     }
+
+    const handleEdit = item => {
+
+        setForm({
+            ...item
+        })
+        setEditing(!editing)
+        
+    }
+
+    const handleDelete = e => {
+        e.preventDefault()
+        const res = window.confirm('Really want to delete the menu item?')
+        if (res){
+            deleteFood(id)
+                .then(res => {
+                    setCount(count + 1)
+                })
+        }
+    }
+
     if (selected.length === 0) {
          message =  <h2>No menu items. Please add</h2>
     }
@@ -60,14 +100,14 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
                         onClick={() => toggleSelect(item.id)} key={item.id}  
                         className={item.selected ? 'selected': ''}>
                         {item.name}
-                    </li>
+                        <button onClick={ e => handleEdit(item)}>Edit</button>
+                        <button onClick={handleDelete}>Delete</button>
+                        </li>
                 )
             })}
             {  message }
             <div className='menu-buttons'>
-                <button onClick={() => null }>Add Menu Item</button>
-                <button onClick={() => null }>Edit Menu Item</button>
-                <button onClick={() => null }>Delete Menu Item</button>
+                <button onClick={() => setAdding(!adding) }>Add Menu Item</button>
             </div>
             {/* ##### EDIT FORM */
              editing &&(
@@ -97,10 +137,11 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
                         id='quantity'
                         type='text'
                         name='quantity'
-                        value={form.quantitiy}
+                        value={form.quantity}
                         onChange={handlesChanges}
                     />
                     </label>
+                    <button >Edit</button>
                 </form>
                 </>
             )}
@@ -135,10 +176,11 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
                         id='quantity'
                         type='text'
                         name='quantity'
-                        value={form.quantitiy}
+                        value={form.quantity}
                         onChange={handlesChanges}
                     />
                     </label>
+                    <button >ADD</button>
                 </form>
                 </>
              )}
@@ -148,7 +190,8 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu }) {
 
 const mapState = state => {
     return {
-        menu: state.food.menu
+        menu: state.food.menu,
+        isEditing: state.food.isEditing
     }
 }
 

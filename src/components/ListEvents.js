@@ -7,6 +7,13 @@ function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, 
   //let list
   const { push } = useHistory()
 
+
+  // REMOVE IN PRODUCTION, THIS IS FOR TESTING
+  if (!userID) {
+    userID = 1
+  }
+  // remove in production
+
   useEffect(() => {
     getEvents(userID);
   }, [getEvents, userID]);
