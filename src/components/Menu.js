@@ -23,22 +23,22 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu, isEditing }) {
 
     useEffect(() => {
         getFoods(id)
-            .then(res => {
-                setSelected(res)
-            })
+            // .then(res => {
+            //     setSelected(res)
+            // })
     }, [id, getFoods, count])
 
-    const toggleSelect = itemId => {
-        const newTodos = selected.map(item => {
-            if (itemId == item.id) {
-                item.selected = !item.selected
-                return item
-            }
-            return item
-        })
+    // const toggleSelect = itemId => {
+    //     const newTodos = selected.map(item => {
+    //         if (itemId == item.id) {
+    //             item.selected = !item.selected
+    //             return item
+    //         }
+    //         return item
+    //     })
         
-        setSelected(newTodos)
-    }
+    //     setSelected(newTodos)
+    // }
 
     const handlesChanges = e => {
         const { name, value} = e.target
@@ -54,14 +54,20 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu, isEditing }) {
                 .then(res => {
                     setCount(count + 1)
                 })
-            setAdding(false)
+            setAdding(!adding)
             setForm({...formInit, eventID: id})
             
         } else if (editing) {
-            editFood(form)
-            setEditing(!adding)
+            editFood({
+                eventID: Number(id),
+                name: form.name,
+                quantity: form.quantity,
+                category: form.category
+            }, form.id).then(res => {
+                setCount(count + 1)
+            })
             setForm({...formInit, eventID: id})
-            setCount(count + 1)
+            setEditing(!editing)
         }
 
     }
@@ -75,8 +81,7 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu, isEditing }) {
         
     }
 
-    const handleDelete = e => {
-        e.preventDefault()
+    const handleDelete = id => {
         const res = window.confirm('Really want to delete the menu item?')
         if (res){
             deleteFood(id)
@@ -86,7 +91,7 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu, isEditing }) {
         }
     }
 
-    if (selected.length === 0) {
+    if (menu.length === 0) {
          message =  <h2>No menu items. Please add</h2>
     }
 
@@ -94,15 +99,17 @@ function Menu({ getFoods, addFood, editFood, deleteFood, menu, isEditing }) {
 
     return (
         <div>
-            {selected.map( item => {
+            {menu.map( item => {
                 return (
-                    <li 
-                        onClick={() => toggleSelect(item.id)} key={item.id}  
+                    <div 
+                        // onClick={() => toggleSelect(item.id)} key={item.id}  
                         className={item.selected ? 'selected': ''}>
-                        {item.name}
+                        <h4>{item.name}</h4>
+                        <p>{item.category}</p>
+                        <p>Quantity: {item.quantity}</p>
                         <button onClick={ e => handleEdit(item)}>Edit</button>
-                        <button onClick={handleDelete}>Delete</button>
-                        </li>
+                        <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        </div>
                 )
             })}
             {  message }

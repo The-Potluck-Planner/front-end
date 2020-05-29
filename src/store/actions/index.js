@@ -176,17 +176,19 @@ export const EDIT_FOOD_START = 'EDIT_FOOD_START'
 export const EDIT_FOOD_SUCCESS = 'EDIT_FOOD_SUCCESS'
 export const EDIT_FOOD_FAILURE = 'EDIT_FOOD_FAILURE'
 
-export const editFood = food => dispatch => {
+export const editFood = (food, id) => dispatch => {
     dispatch({ type: EDIT_FOOD_START })
-    axiosWithAuth()
-        .put(`api/food/${food.id}`, food)
+    return axiosWithAuth()
+        .put(`api/food/${id}`, food)
         .then(res => {
             console.log(res.data)
             dispatch({ type: EDIT_FOOD_SUCCESS })
+            return res.data
         })
         .catch(err => {
             console.log({err})
             dispatch({ type: EDIT_FOOD_FAILURE, payload: err })
+            return err
         })
 }
 
