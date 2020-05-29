@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getGuests } from '../store/actions'
 import styled from 'styled-components'
+import '../scss/Guests.scss'
 
 
 function Guests(){
     const RsvpIndicator=styled.span`
-        height: 20px;
-        width:20px;
+        height: 15px;
+        width:15px;
         border-radius:50%;
         display:inline-block;
 

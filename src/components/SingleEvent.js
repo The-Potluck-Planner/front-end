@@ -42,8 +42,12 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
     }
 
     const guestSample={
-        name: 'suzi',
+        name: 'Andy',
         RSVP: false
+    }
+    const guestSample2={
+        name: 'Suzie',
+        RSVP: true
     }
 
     return (
@@ -68,6 +72,7 @@ function SingleEvent({ deleteEvent, events, isEditing, isLoading }) {
                 <div className="guestSection">
                 <h3>Invitations/Guests</h3>
                 <Guests info={guestSample}/>
+                <Guests info={guestSample2}/>
                 <button onClick={onInviteSubmit}>Invite a Friend</button> 
                 {inviting && (
                     <>
