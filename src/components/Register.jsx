@@ -47,7 +47,7 @@ function Register(props){
      <div className='errorMessage'>{errors.password}</div>
      </div>
 
-     <button onClick={onSubmit}>Submit</button>
+     <button className='registerButton' onClick={onSubmit}>Submit</button>
         </form>
      
       </div>

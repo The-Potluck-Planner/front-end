@@ -29,10 +29,10 @@ function Guests(){
         <div>
             {guests && guests.map(guest => {
                return (
-                   <>
-                    <p>{guest.name}</p>
-                    <RsvpIndicator RSVP={guest.RSVP}></RsvpIndicator>
-                   </>
+                   <div className='guestDisplay'>
+                    <p>{guest.name}   RSVP: <RsvpIndicator RSVP={guest.RSVP}></RsvpIndicator></p>
+                  
+                   </div>
                )
            })} 
         </div>
