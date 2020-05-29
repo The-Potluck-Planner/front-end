@@ -1,7 +1,37 @@
+.dashboardContainer{
+
+    .dashboardHeader{
+        width:40%;
+       // border: 2px solid red ;
+        margin-top: 2%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 2%;
+        h2{
+            width:40%;
+           // border: 2px solid red ;
+        }
+        .createEventButton{
+            width: 100%;
+             height:2rem;
+             font-size:1.2rem;
+             letter-spacing: .1rem;
+             border-radius: 10%;
+             background-color:  #386A6C;
+             color:white;
+            // border: 2px solid red ;
+       
+        }
+
+    }
+ 
+
 .eventsContainer{
 
     width:100%;
     display: flex;
     justify-content: space-around;
+
+}
 
 }

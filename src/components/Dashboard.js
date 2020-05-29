@@ -13,8 +13,10 @@ export default function Dashboard(props) {
 
     return (
         <div className="dashboardContainer">
-            <h1>Hello {name} </h1>
+            <div className='dashboardHeader'>
+            <h2>Hello {name} </h2>
             <Link to='/addevent'><button className="createEventButton">Create an Event</button></Link>
+             </div>
             <div className="eventsContainer">
             <ListEvents eventsList='events'/>
             <ListEvents eventsList='events'/>

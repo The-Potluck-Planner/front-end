@@ -28,8 +28,8 @@ function ListEvents({ getEvents, events, isLoading, errors, userID, eventsList, 
   // }
 
   return (
-    <div className='upcomingEvents'>
-      <h2>Upcoming Events</h2>
+    <div className='myEvents'>
+      <h2>My Events</h2>
       {events &&
         events.map((event) => {
           return (        
